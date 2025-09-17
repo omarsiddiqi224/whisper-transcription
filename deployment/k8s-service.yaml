@@ -1,0 +1,28 @@
+# deployment/k8s-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  selector:
+    app: whisper-backend
+  ports:
+  - name: http
+    port: 8000
+    targetPort: 8000
+  - name: websocket
+    port: 9090
+    targetPort: 9090
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  selector:
+    app: whisper-frontend
+  ports:
+  - port: 80
+    targetPort: 80
+  type: LoadBalancer
