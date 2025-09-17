@@ -45,7 +45,7 @@ app.add_middleware(
 # Configuration
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 COMPUTE_TYPE = "float16" if DEVICE == "cuda" else "int8"
-WHISPER_MODEL = "small"
+WHISPER_MODEL = "large-v3"
 BATCH_SIZE = 16
 HF_TOKEN = os.getenv("HF_TOKEN", "")  # Set your Hugging Face token
 
@@ -57,7 +57,7 @@ diarize_model = None
 class TranscriptionRequest(BaseModel):
     audio_path: str
     diarize: bool = True
-    model: str = "small"
+    model: str = "large-v3"
 
 class SummarizationRequest(BaseModel):
     transcript: str
@@ -114,7 +114,7 @@ async def startup_event():
 async def transcribe_audio(
     audio: UploadFile = File(...),
     diarize: bool = Form(True),
-    model: str = Form("small")
+    model: str = Form("large-v3")
 ):
     """
     Transcribe audio file with optional speaker diarization
